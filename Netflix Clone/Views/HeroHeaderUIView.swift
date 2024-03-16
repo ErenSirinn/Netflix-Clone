@@ -35,7 +35,7 @@ class HeroHeaderUIView: UIView {
     private let heroImageView = {
        
         let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFill
+        imageView.contentMode = .scaleAspectFill //MARK: HEROHEADER FOTO AYARLAMA
         imageView.clipsToBounds = true
         imageView.image = UIImage(named: "heroImage")
         return imageView
@@ -79,14 +79,20 @@ class HeroHeaderUIView: UIView {
         NSLayoutConstraint.activate(downloadButtonConstraints)
     }
     
-    
-    required init?(coder: NSCoder) {
-        fatalError()
+    public func configure(with model: TitleViewModel) {
+        guard let url = URL(string: "https://image.tmdb.org/t/p/w500/\(model.posterURL)") else {
+            return
+        }
+        
+        heroImageView.sd_setImage(with: url, completed: nil)
     }
+
     override func layoutSubviews() {
         super.layoutSubviews()
         heroImageView.frame = bounds
     }
-    
+    required init?(coder: NSCoder) {
+        fatalError()
+    }
     
 }
